@@ -13,7 +13,7 @@ const firebaseConfig = {
   storageBucket: "time-azul-hburger.appspot.com",
   messagingSenderId: "488839518614",
   appId: "1:488839518614:web:9e9773131b7aaa8417e5b7",
-  measurementId: "G-3FXVRQ24LB",
+  measurementId: "G-3FXVRQ24LB"
 };
 
 // Initialize Firebase
