@@ -1,5 +1,4 @@
 import { Ingredient } from "./types/ingredient";
-import appendChild from "./functions/appendChild";
 
 const mainPage = document.querySelector(".mainBurger");
 
@@ -37,18 +36,16 @@ if (mainPage) {
 	breadList.innerHTML = "";
 
 	bread.forEach((item) => {
-		const breadItem = appendChild(
-			"li",
-			`
-              <label>
-                <input type="radio" name="item" checked />
-                <span></span>
-                <h3>${item.name}</h3>
-                <div>${item.price}</div>
-              </label>
-		`,
-			breadList
-		);
+		const breadItem = document.createElement("li");
+		breadItem.innerHTML = `
+			<label>
+				<input type="radio" name="item" checked />
+				<span></span>
+				<h3>${item.name}</h3>
+				<div>${item.price}</div>
+			</label>
+		`;
+
+		breadList.appendChild(breadItem);
 	});
 }
-
