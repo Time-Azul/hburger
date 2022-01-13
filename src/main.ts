@@ -1,4 +1,5 @@
 import { Ingredient } from "./types/ingredient";
+import appendChild from "./functions/appendChild";
 
 const mainPage = document.querySelector(".mainBurger");
 
@@ -36,7 +37,7 @@ if (mainPage) {
 	breadList.innerHTML = "";
 
 	bread.forEach((item) => {
-		/*const breadItem = appendChild(
+		const breadItem = appendChild(
 			"li",
 			`
               <label>
@@ -47,6 +48,7 @@ if (mainPage) {
               </label>
 		`,
 			breadList
-		);*/
+		);
 	});
 }
+
