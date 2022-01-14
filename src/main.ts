@@ -17,10 +17,25 @@ if (mainPage) {
       name: "Pão de Batata",
       price: 2.5,
     },
-	{
-		name: "Pão de Frances",
-		price: 10.00,
-	  },
+    {
+      name: "Pão de Frances",
+      price: 10.0,
+    },
+  ];
+
+  let ingredient: Ingredient[] = [
+    {
+      name: "Carne Bovina 125g",
+      price: 3,
+    },
+    {
+      name: "Carne de Frango 125g",
+      price: 2.5,
+    },
+    {
+      name: "Carne de Peixe 125g",
+      price: 2,
+    },
   ];
 
   const setBurger = mainPage.querySelector(
@@ -52,6 +67,27 @@ if (mainPage) {
 			</label>
 		`,
       breadList
+    );
+  });
+
+  const ingredientList = mainPage.querySelector(
+    ".ingredient ul"
+  ) as HTMLDivElement;
+
+  ingredientList.innerHTML = "";
+
+  ingredient.forEach((item) => {
+    const ingredientItem = appendChild(
+      "li",
+      `
+      <label>
+        <input type="checkbox" name="item" />
+        <span></span>
+        <h3>${item.name}</h3>
+        <div>${item.price}</div>
+      </label>
+      `,
+      ingredientList
     );
   });
 }
