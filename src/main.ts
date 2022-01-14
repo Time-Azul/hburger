@@ -72,7 +72,7 @@ if (mainPage) {
 
   breadList.innerHTML = "";
 
-  bread.forEach(item => {
+  bread.forEach((item) => {
     const breadItem = appendChild(
       "li",
       `
@@ -87,9 +87,7 @@ if (mainPage) {
     );
   });
 
-  const ingredientList = mainPage.querySelector(
-    ".ingredient ul"
-  ) as HTMLDivElement;
+  const ingredientList = mainPage.querySelector(".ingredient ul") as HTMLDivElement;
 
   ingredientList.innerHTML = "";
 
@@ -128,14 +126,15 @@ if (mainPage) {
     );
   });
 
+  const renderCart = () => {};
+
   const breadSelectChange = (e: Event) => {
     const input = e.target as HTMLInputElement;
 
     if (input.checked) {
       // bread.push(Number(input.value));
-    } else {
-      
     }
-  }
 
+    renderCart();
+  };
 }
