@@ -1,6 +1,7 @@
 import { Ingredient } from "./types/ingredient";
 import { Hamburguer } from "./types/hamburguer";
 import appendChild from "./functions/appendChild";
+import setFormValues from "./functions/setFormValues";
 
 const mainPage = document.querySelector(".mainBurger");
 
@@ -71,12 +72,12 @@ if (mainPage) {
 
   breadList.innerHTML = "";
 
-  bread.forEach((item) => {
+  bread.forEach(item => {
     const breadItem = appendChild(
       "li",
       `
 			<label>
-				<input type="radio" name="item" checked />
+				<input type="radio" name="item"/>
 				<span></span>
 				<h3>${item.name}</h3>
 				<div>${item.price}</div>
@@ -126,4 +127,15 @@ if (mainPage) {
       hamburguerList
     );
   });
+
+  const breadSelectChange = (e: Event) => {
+    const input = e.target as HTMLInputElement;
+
+    if (input.checked) {
+      // bread.push(Number(input.value));
+    } else {
+      
+    }
+  }
+
 }
