@@ -1,4 +1,5 @@
 import { Ingredient } from "./types/ingredient";
+import { Hamburguer } from "./types/hamburguer";
 import appendChild from "./functions/appendChild";
 
 const mainPage = document.querySelector(".mainBurger");
@@ -35,6 +36,21 @@ if (mainPage) {
     {
       name: "Carne de Peixe 125g",
       price: 2,
+    },
+  ];
+
+  let hamburguer: Hamburguer[] = [
+    {
+      name: "Hamburguer 1",
+      price: 15,
+    },
+    {
+      name: "Hamburguer 2",
+      price: 20,
+    },
+    {
+      name: "Hamburguer 3",
+      price: 25,
     },
   ];
 
@@ -88,6 +104,26 @@ if (mainPage) {
       </label>
       `,
       ingredientList
+    );
+  });
+
+  const hamburguerList = mainPage.querySelector("aside ul") as HTMLDivElement;
+
+  hamburguerList.innerHTML = "";
+
+  hamburguer.forEach((item) => {
+    const hamburguerItem = appendChild(
+      "li",
+      `
+        <div>${item.name}</div>
+        <div>${item.price}</div>
+        <button type="button" aria-label="Remover Hamburguer 1">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M6 19C6 20.1 6.9 21 8 21H16C17.1 21 18 20.1 18 19V7H6V19ZM19 4H15.5L14.5 3H9.5L8.5 4H5V6H19V4Z" fill="black"/>
+          </svg>
+        </button>
+      `,
+      hamburguerList
     );
   });
 }
