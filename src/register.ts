@@ -11,9 +11,11 @@ const pageRegister = document.querySelector(
 
 const auth = getAuth();
 
+
 if (pageRegister) {
   const form = pageRegister.querySelector("form") as HTMLFormElement;
   const span = form.querySelector("span") as HTMLSpanElement;
+  span.style.marginTop = "10px";
 
   form.addEventListener("submit", (e) => {
     e.preventDefault();
@@ -31,21 +33,14 @@ if (pageRegister) {
         }).then(() => {
             setTimeout(() => {
               window.location.href = "login.html";
-            }, 1000);
+            }, 3000);
           })
           .catch((error) => {
-
-            const errorMessage = error.message;
+            
             const errorCode = error.code;
 
             console.log(errorCode);
 
-            // if (errorMessage == "auth/wrong-password") {
-            //   span.innerText = "senha incorreta!";
-            // } else if (errorMessage == "auth/user-not-found") {
-            // } else {
-            //   span.innerText = "fale com um administrador!";
-            // }
           });
       })
       .catch((error) => {

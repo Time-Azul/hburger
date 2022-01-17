@@ -7,6 +7,8 @@ const auth = getAuth();
 
 if (pageAuth) {
   const form = pageAuth.querySelector("#form-login") as HTMLFormElement;
+  const span = form.querySelector("span") as HTMLSpanElement;
+  span.style.marginTop = "10px";
 
   form.addEventListener("submit", (e) => {
     e.preventDefault();
@@ -24,11 +26,10 @@ if (pageAuth) {
 
         setTimeout(() => {
           window.location.href = "index.html";
-        }, 1000);
+        }, 3000);
 
       })
       .catch((error) => {
-        const span = form.querySelector("span") as HTMLSpanElement;
 
         const errorCode = error.code;
 

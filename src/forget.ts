@@ -1,25 +1,32 @@
 import { getAuth, sendPasswordResetEmail } from "firebase/auth";
+import getFormValues from "./functions/getFormValues";
 
-const pageForget = document.querySelector("body#auth #forget") as HTMLElement;
+const form = document.querySelector("form#form-forget") as HTMLFormElement;
 const auth = getAuth();
 
-if (pageForget) {
-    const form = pageForget.querySelector("form [name='email']") as HTMLFormElement;
-    const span = form.querySelector("span") as HTMLSpanElement;
 
-
+if (form) {
+  const span = form.querySelector("span") as HTMLSpanElement;
+  span.style.marginTop = "10px";
   form.addEventListener("submit", (e) => {
     e.preventDefault();
 
-    const email = sessionStorage.getItem("email");
+    const { email } = getFormValues(form);
 
-    if (email) {
+      sendPasswordResetEmail(auth, email)
 
-        sendPasswordResetEmail(auth, email)
         .then(() => {
-          span.innerText = "Instruções enviada para seu e-mail!";
+
+          const button = form.querySelector("button") as HTMLButtonElement;
+          const input = form.querySelector("input") as HTMLButtonElement;
+          button.disabled = true;
+          input.value = "";
+          
+          
+          span.innerText = "Instruções enviadas para seu e-mail!";
+
         })
-        .catch((error) => console.error(error.message));
-    }
+
+        .catch((error) => console.error(error.code));
   });
 }
