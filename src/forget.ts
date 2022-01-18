@@ -1,4 +1,4 @@
-import { getAuth, sendPasswordResetEmail } from "firebase/auth";
+import { getAuth, sendPasswordResetEmail, onAuthStateChanged } from "firebase/auth";
 import getFormValues from "./functions/getFormValues";
 
 const form = document.querySelector("form#form-forget") as HTMLFormElement;
@@ -8,6 +8,23 @@ const auth = getAuth();
 if (form) {
   const span = form.querySelector("span") as HTMLSpanElement;
   span.style.marginTop = "10px";
+
+  onAuthStateChanged(getAuth(), () => {
+    if (auth.currentUser) { 
+
+      const url_atual = window.location.href;
+
+      if (url_atual) {
+
+        window.location.assign("index.html");
+
+      }
+      
+    } else {
+      window.location.assign("login.html");
+    }
+  });
+
   form.addEventListener("submit", (e) => {
     e.preventDefault();
 

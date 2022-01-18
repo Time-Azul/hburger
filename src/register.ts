@@ -1,7 +1,7 @@
 import {
   getAuth,
   createUserWithEmailAndPassword,
-  updateProfile,
+  updateProfile, onAuthStateChanged
 } from "firebase/auth";
 import getFormValues from "./functions/getFormValues";
 
@@ -16,6 +16,22 @@ if (pageRegister) {
   const form = pageRegister.querySelector("form") as HTMLFormElement;
   const span = form.querySelector("span") as HTMLSpanElement;
   span.style.marginTop = "10px";
+
+  onAuthStateChanged(getAuth(), () => {
+    if (auth.currentUser) { 
+
+      const url_atual = window.location.href;
+
+      if (url_atual) {
+
+        window.location.assign("index.html");
+
+      }
+      
+    } else {
+      window.location.assign("login.html");
+    }
+  });
 
   form.addEventListener("submit", (e) => {
     e.preventDefault();
