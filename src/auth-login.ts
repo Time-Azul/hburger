@@ -22,9 +22,7 @@ if (pageAuth) {
 
             }
             
-          } else {
-            window.location.assign("login.html");
-          }
+          } 
         });
 
   form.addEventListener("submit", (e) => {
