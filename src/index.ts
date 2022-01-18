@@ -5,3 +5,4 @@ import "./register";
 import "./forget";
 import "./auth-user";
 import "./orders";
+import "./pay";
