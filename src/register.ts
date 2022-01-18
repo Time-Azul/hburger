@@ -28,8 +28,6 @@ if (pageRegister) {
 
       }
       
-    } else {
-      window.location.assign("login.html");
     }
   });
 

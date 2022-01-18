@@ -20,8 +20,6 @@ if (form) {
 
       }
       
-    } else {
-      window.location.assign("login.html");
     }
   });
 
