@@ -10,7 +10,7 @@ if (mainPage) {
 	let breadSelected: number;
 	let ingredientSelected: number[] = [];
 
-	let itensCard: object[] = [];
+	let itensCart: object[] = [];
 	let cart = {};
 
 	const breadList = mainPage.querySelector(".bread ul") as HTMLDivElement;
@@ -23,11 +23,11 @@ if (mainPage) {
 
 		let dataCart = JSON.parse(`${data}`);
 
-		console.log(Object.keys(dataCart.itemCart));
+		console.log(dataCart["itensCart"]);
 	};
 
 	setBurger.addEventListener("click", () => {
-		itensCard.push({
+		itensCart.push({
 			bread: breadSelected,
 			ingredient: ingredientSelected,
 		});
@@ -35,7 +35,7 @@ if (mainPage) {
 		cart = {
 			user: 321654987,
 			numberOrder: 123456789,
-			itensCard,
+			itensCart,
 		};
 
 		localStorage.setItem("order", JSON.stringify(cart));
