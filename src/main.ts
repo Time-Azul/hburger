@@ -18,12 +18,24 @@ if (mainPage) {
 		"section footer button"
 	) as HTMLButtonElement;
 
+	const parceStorage = () => {
+		const getStorage = localStorage.getItem("order");
+		const cartStorage = JSON.parse(`${getStorage}`);
+
+		return cartStorage;
+	};
+
 	const renderCart = () => {
-		let data = localStorage.getItem("order");
+		const breadCardList = mainPage.querySelector(
+			"aside ul"
+		) as HTMLDivElement;
+		breadCardList.innerHTML = "";
+		const burgerCart = parceStorage();
 
-		let dataCart = JSON.parse(`${data}`);
-
-		console.log(dataCart["itensCart"]);
+		const breadCardItem = burgerCart["itensCart"];
+		// breadCardItem.forEach((item) => {
+		// 	console.log("test");
+		// });
 	};
 
 	setBurger.addEventListener("click", () => {
@@ -36,6 +48,7 @@ if (mainPage) {
 			user: 321654987,
 			numberOrder: 123456789,
 			itensCart,
+			totalOrder: 3213,
 		};
 
 		localStorage.setItem("order", JSON.stringify(cart));
@@ -151,4 +164,20 @@ if (mainPage) {
 		liInput.addEventListener("change", ingredientSelectedChange);
 		ingredientList.appendChild(li);
 	});
+
+	// hamburguer.forEach((item) => {
+	// 	const hamburguerItem = appendChild(
+	// 		"li",
+	// 		`
+	//     <div>${item.name}</div>
+	//     <div>${item.price}</div>
+	//     <button type="button" aria-label="Remover Hamburguer 1">
+	//       <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+	//         <path d="M6 19C6 20.1 6.9 21 8 21H16C17.1 21 18 20.1 18 19V7H6V19ZM19 4H15.5L14.5 3H9.5L8.5 4H5V6H19V4Z" fill="black"/>
+	//       </svg>
+	//     </button>
+	//   `,
+	// 		hamburguerList
+	// 	);
+	// });
 }
