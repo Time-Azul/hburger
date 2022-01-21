@@ -13,49 +13,6 @@ if (mainPage) {
 	let itensCart: object[] = [];
 	let cart = {};
 
-	const breadList = mainPage.querySelector(".bread ul") as HTMLDivElement;
-	const setBurger = mainPage.querySelector(
-		"section footer button"
-	) as HTMLButtonElement;
-
-	const parceStorage = () => {
-		const getStorage = localStorage.getItem("order");
-		const cartStorage = JSON.parse(`${getStorage}`);
-
-		return cartStorage;
-	};
-
-	const renderCart = () => {
-		const breadCardList = mainPage.querySelector(
-			"aside ul"
-		) as HTMLDivElement;
-		breadCardList.innerHTML = "";
-		const burgerCart = parceStorage();
-
-		const breadCardItem = burgerCart["itensCart"];
-		// breadCardItem.forEach((item) => {
-		// 	console.log("test");
-		// });
-	};
-
-	setBurger.addEventListener("click", () => {
-		itensCart.push({
-			bread: breadSelected,
-			ingredient: ingredientSelected,
-		});
-
-		cart = {
-			user: 321654987,
-			numberOrder: 123456789,
-			itensCart,
-			totalOrder: 3213,
-		};
-
-		localStorage.setItem("order", JSON.stringify(cart));
-
-		renderCart();
-	});
-
 	let breads: Ingredient[] = [
 		{
 			id: 1,
@@ -106,6 +63,79 @@ if (mainPage) {
 			price: 2,
 		},
 	];
+
+	const breadList = mainPage.querySelector(".bread ul") as HTMLDivElement;
+	const setBurger = mainPage.querySelector(
+		"section footer button"
+	) as HTMLButtonElement;
+
+	const parceStorage = () => {
+		const getStorage = sessionStorage.getItem("order");
+		const cartStorage = JSON.parse(`${getStorage}`);
+
+		return cartStorage;
+	};
+
+	const breadCardList = mainPage.querySelector("aside ul") as HTMLDivElement;
+	const renderCart = () => {
+		breadCardList.innerHTML = "";
+		const ingredientCart = parceStorage();
+		const breadCardItem = ingredientCart["itensCart"];
+
+		let count = 0;
+
+		breadCardItem.forEach((item: any) => {
+			count++;
+			const li = document.createElement("li");
+			const breadPrice = breads.find(
+				(price) => price.id === item["bread"]
+			)?.price;
+
+			const ingredientList = item["ingredient"].forEach((item: any) => {
+				console.log(ingredientList);
+				ingredients.find((price) => price.id === item["price"]);
+			});
+
+			console.log(ingredientList);
+
+			// const ingredentsBurgerTotal = ingredientCart.
+			// 	.map((ingredient) => ingredient.price)
+			// 	.reduce((a, b) => a + b, 0);
+
+			// const totalBurger = ingredentsBurgerTotal + Number(breadPrice);
+
+			// console.log(totalBurger);
+			// li.innerHTML = `
+			// <div>${`Hamburger ${count}`}</div>
+			// 	<div>${formatCurrency(totalBurger)}</div>
+			// 	<button type="button" aria-label="Remover Hamburguer 1">
+			// 	<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+			// 	<path d="M6 19C6 20.1 6.9 21 8 21H16C17.1 21 18 20.1 18 19V7H6V19ZM19 4H15.5L14.5 3H9.5L8.5 4H5V6H19V4Z" fill="black"/>
+			// 	</svg>
+			// </button>
+			// `;
+			breadCardList.appendChild(li);
+		});
+	};
+
+	const calcItemCart = () => {};
+
+	setBurger.addEventListener("click", () => {
+		itensCart.push({
+			bread: breadSelected,
+			ingredient: ingredientSelected,
+		});
+
+		cart = {
+			user: 321654987,
+			numberOrder: 123456789,
+			itensCart,
+		};
+
+		sessionStorage.setItem("order", JSON.stringify(cart));
+
+		renderCart();
+	});
 
 	const breadSelectedChange = (e: Event) => {
 		const input = e.target as HTMLInputElement;
@@ -165,19 +195,5 @@ if (mainPage) {
 		ingredientList.appendChild(li);
 	});
 
-	// hamburguer.forEach((item) => {
-	// 	const hamburguerItem = appendChild(
-	// 		"li",
-	// 		`
-	//     <div>${item.name}</div>
-	//     <div>${item.price}</div>
-	//     <button type="button" aria-label="Remover Hamburguer 1">
-	//       <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-	//         <path d="M6 19C6 20.1 6.9 21 8 21H16C17.1 21 18 20.1 18 19V7H6V19ZM19 4H15.5L14.5 3H9.5L8.5 4H5V6H19V4Z" fill="black"/>
-	//       </svg>
-	//     </button>
-	//   `,
-	// 		hamburguerList
-	// 	);
-	// });
+	breadCardList.innerHTML = "";
 }
