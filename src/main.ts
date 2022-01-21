@@ -1,199 +1,146 @@
 import { Ingredient } from "./types/ingredient";
-import { Hamburguer } from "./types/hamburguer";
+import { Breads } from "./types/breads";
 import appendChild from "./functions/appendChild";
-import { Order } from "./types/order";
 import formatCurrency from "./functions/formatCurrency";
+import { Hamburguer } from "./types/hamburguer";
+import { getFirestore, onSnapshot, collection } from "firebase/firestore";
+import setFormValues from "./functions/setFormValues";
 
 const mainPage = document.querySelector(".mainBurger");
 
 if (mainPage) {
-	let breadSelected: number;
-	let ingredientSelected: number[] = [];
+  const db = getFirestore();
 
-	let itensCart: object[] = [];
-	let cart = {};
+  let itensSelected: number[] = [];
 
-	let breads: Ingredient[] = [
-		{
-			id: 1,
-			name: "Pão Tradicional",
-			price: 2,
-		},
-		{
-			id: 2,
-			name: "Pão Australiano",
-			price: 3,
-		},
-		{
-			id: 3,
-			name: "Pão de Batata",
-			price: 2.5,
-		},
-		{
-			id: 4,
-			name: "Pão de Frances",
-			price: 10.0,
-		},
-	];
+  let breads: Breads[] = [];
 
-	let ingredients: Ingredient[] = [
-		{
-			id: 1,
-			name: "Carne Bovina 125g",
-			price: 3,
-		},
-		{
-			id: 2,
-			name: "Carne de Frango 125g",
-			price: 2.5,
-		},
-		{
-			id: 3,
-			name: "Carne de Peixe 125g",
-			price: 2,
-		},
-		{
-			id: 4,
-			name: "Salada",
-			price: 1,
-		},
-		{
-			id: 5,
-			name: "Bacon",
-			price: 2,
-		},
-	];
+  let ingredients: Ingredient[] = [];
 
-	const breadList = mainPage.querySelector(".bread ul") as HTMLDivElement;
-	const setBurger = mainPage.querySelector(
-		"section footer button"
-	) as HTMLButtonElement;
+  let hamburguer: Hamburguer[] = [];
 
-	const parceStorage = () => {
-		const getStorage = sessionStorage.getItem("order");
-		const cartStorage = JSON.parse(`${getStorage}`);
+  const calcTotal = () => {
 
-		return cartStorage;
-	};
+    const totalElement = mainPage.querySelector(".price") as HTMLDivElement;
 
-	const breadCardList = mainPage.querySelector("aside ul") as HTMLDivElement;
-	const renderCart = () => {
-		breadCardList.innerHTML = "";
-		const ingredientCart = parceStorage();
-		const breadCardItem = ingredientCart["itensCart"];
+    const selected = ingredients.filter(ingredients => itensSelected.find(id => ingredients.id === id));
 
-		let count = 0;
+    const total = selected.map(ingredients => ingredients.price).reduce((a, b) => (a + b), 0);
+    console.log(total);
+    totalElement.innerHTML = formatCurrency(total);
 
-		breadCardItem.forEach((item: any) => {
-			count++;
-			const li = document.createElement("li");
-			const breadPrice = breads.find(
-				(price) => price.id === item["bread"]
-			)?.price;
+}
 
-			const ingredientList = item["ingredient"].forEach((item: any) => {
-				console.log(ingredientList);
-				ingredients.find((price) => price.id === item["price"]);
-			});
+  const renderCart = () => {
+    const ulCart = mainPage.querySelector(
+      "#cart ul"
+    ) as HTMLTableSectionElement;
 
-			console.log(ingredientList);
+    ulCart.innerHTML = "";
 
-			// const ingredentsBurgerTotal = ingredientCart.
-			// 	.map((ingredient) => ingredient.price)
-			// 	.reduce((a, b) => a + b, 0);
+    hamburguer.forEach((item) => {
+      const createHamburguers = appendChild(
+        "li",
+        `
+      		<div>Hamburguer 1</div>
+      		<div>R$ 15,00</div>
+      		<button type="button" aria-label="Remover Hamburguer 2">
+      			<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+      				<path d="M6 19C6 20.1 6.9 21 8 21H16C17.1 21 18 20.1 18 19V7H6V19ZM19 4H15.5L14.5 3H9.5L8.5 4H5V6H19V4Z" fill="black" />
+      			</svg>
+      		</button>
+      	`,
+        ulCart
+      );
+    });
+  };
 
-			// const totalBurger = ingredentsBurgerTotal + Number(breadPrice);
+  const ulBreads = mainPage.querySelector(".bread ul") as HTMLDivElement;
+  ulBreads.innerHTML = "";
 
-			// console.log(totalBurger);
-			// li.innerHTML = `
-			// <div>${`Hamburger ${count}`}</div>
-			// 	<div>${formatCurrency(totalBurger)}</div>
-			// 	<button type="button" aria-label="Remover Hamburguer 1">
-			// 	<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-			// 	<path d="M6 19C6 20.1 6.9 21 8 21H16C17.1 21 18 20.1 18 19V7H6V19ZM19 4H15.5L14.5 3H9.5L8.5 4H5V6H19V4Z" fill="black"/>
-			// 	</svg>
-			// </button>
-			// `;
-			breadCardList.appendChild(li);
-		});
-	};
+  const renderBreads = () => {
+    ulBreads.innerHTML = "";
+    breads.forEach((item) => {
+      
+      const createBreads = appendChild(
+        "li",
+        `
+          <label>
+            <input type="radio" name="item" />
+            <span></span>
+            <h3>${item.name}</h3>
+            <div>${formatCurrency(item.price)}</div>
+          </label>
+		`,
+        ulBreads
+      );
+      
+    });
+  };
+  const ulIngredients = mainPage.querySelector(
+    ".ingredient ul"
+  ) as HTMLDivElement;
+  ulIngredients.innerHTML = "";
+  const renderIngredients = () => {
+    ulIngredients.innerHTML = "";
+    ingredients.forEach((item) => {
+      const createIngredients = appendChild(
+        "li",
+        `
+        <label>
+          <input type="checkbox" name="item" value="${item.id}" />
+          <span></span>
+          <h3>${item.name}</h3>
+          <div>${formatCurrency(item.price)}</div>
+        </label>
+			`,
+        ulIngredients
+      );
+      const labelInput = createIngredients.querySelector("input") as HTMLInputElement;
+      labelInput.addEventListener("change", itensSelectedChange);
+    });
+  };
 
-	const calcItemCart = () => {};
+  const itensSelectedChange = (e: Event) => {
+    const input = e.target as HTMLInputElement;
+    if (input.checked) {
+      itensSelected.push(Number(input.value));
+      console.log(itensSelected); // verifica como está montando o array
+    } else {
+      itensSelected = itensSelected.filter((id) => id !== Number(input.value));
+    }
 
-	setBurger.addEventListener("click", () => {
-		itensCart.push({
-			bread: breadSelected,
-			ingredient: ingredientSelected,
-		});
+    renderCart();
+    calcTotal();
+  };
 
-		cart = {
-			user: 321654987,
-			numberOrder: 123456789,
-			itensCart,
-		};
+  onSnapshot(collection(db, "breads"), (collection) => {
+    breads = [];
 
-		sessionStorage.setItem("order", JSON.stringify(cart));
+    collection.forEach((doc) => {
+      breads.push(doc.data() as Breads);
+    });
 
-		renderCart();
-	});
+    renderBreads();
+  });
 
-	const breadSelectedChange = (e: Event) => {
-		const input = e.target as HTMLInputElement;
+  onSnapshot(collection(db, "Ingredientes"), (collection) => {
+    ingredients = [];
 
-		if (input.checked) {
-			let breadId = Number(input.value);
-			breadSelected = Number(breadId);
-		}
-	};
+    collection.forEach((doc) => {
+      ingredients.push(doc.data() as Ingredient);
+    });
 
-	breadList.innerHTML = "";
-	breads.forEach((item) => {
-		const li = document.createElement("li") as HTMLLIElement;
-		li.innerHTML = `
-    <label>
-      <input type="radio" name="item" value="${item.id}"/>
-      <span></span>
-      <h3>${item.name}</h3>
-      <div>${formatCurrency(item.price)}</div>
-    </label>
-    `;
+    renderIngredients();
+  });
 
-		const liInput = li.querySelector("input") as HTMLInputElement;
-		liInput.addEventListener("change", breadSelectedChange);
-		breadList.appendChild(li);
-	});
+  onSnapshot(collection(db, "pedidos"), (collection) => {
+    hamburguer = [];
 
-	const ingredientSelectedChange = (e: Event) => {
-		const input = e.target as HTMLInputElement;
+    collection.forEach((doc) => {
+      hamburguer.push(doc.data() as Hamburguer);
+    });
 
-		if (input.checked) {
-			ingredientSelected.push(Number(input.value));
-		} else {
-			ingredientSelected = ingredientSelected.filter(
-				(id) => id !== Number(input.value)
-			);
-		}
-	};
-
-	const ingredientList = mainPage.querySelector(
-		".ingredient ul"
-	) as HTMLDivElement;
-	ingredientList.innerHTML = "";
-	ingredients.forEach((item) => {
-		const li = document.createElement("li") as HTMLLIElement;
-		li.innerHTML = `
-      <label>
-        <input type="checkbox" name="item" value="${item.id}" />
-        <span></span>
-        <h3>${item.name}</h3>
-        <div>${formatCurrency(item.price)}</div>
-      </label>
-    `;
-
-		const liInput = li.querySelector("input") as HTMLInputElement;
-		liInput.addEventListener("change", ingredientSelectedChange);
-		ingredientList.appendChild(li);
-	});
-
-	breadCardList.innerHTML = "";
+    renderCart();
+  });
 }

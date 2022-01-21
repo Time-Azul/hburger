@@ -1,5 +1,6 @@
 export type Hamburguer = {
-	//id: number;
-	name: string;
-	price: number;
+	id: number;
+	itens: object;
+	number: number;
+	user: string;
 };
