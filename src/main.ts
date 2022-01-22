@@ -45,12 +45,18 @@ if (mainPage) {
 				const breadItem = breads.find(
 					(price) => price.id === item["bread"]
 				);
-				item.ingredients.forEach((item: any) => {
-					console.log(item);
-				});
+
+				const ingredientItem = item.ingredients
+					.map((ingredient: any) =>
+						ingredients.find(
+							(ingredientItem) => ingredientItem.id === ingredient
+						)
+					)
+					.map((ingredient: any) => ingredient.price)
+					.reduce((a: any, b: any) => a + b, 0);
 
 				const breadPrice = Number(breadItem?.["price"]);
-				const ingredientsPrice = 1;
+				const ingredientsPrice = ingredientItem;
 
 				li.innerHTML = `
           <div id="item">${`Hamburger ${count}`}</div>
@@ -161,7 +167,6 @@ if (mainPage) {
 		});
 
 		renderBreads();
-		renderCart();
 	});
 
 	onSnapshot(collection(db, "Ingredientes"), (collection) => {
