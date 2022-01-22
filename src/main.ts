@@ -42,6 +42,7 @@ if (mainPage) {
       itensCartStorage.forEach((item: any) => {
         const li = document.createElement("li");
 
+<<<<<<< HEAD
         const breadItem = breads.find((price) => price.id === item["bread"]);
         item.ingredients.forEach((item: any) => {
           console.log(item);
@@ -49,6 +50,23 @@ if (mainPage) {
 
         const breadPrice = Number(breadItem?.["price"]);
         const ingredientsPrice = 1;
+=======
+				const breadItem = breads.find(
+					(price) => price.id === item["bread"]
+				);
+
+				const ingredientItem = item.ingredients
+					.map((ingredient: any) =>
+						ingredients.find(
+							(ingredientItem) => ingredientItem.id === ingredient
+						)
+					)
+					.map((ingredient: any) => ingredient.price)
+					.reduce((a: any, b: any) => a + b, 0);
+
+				const breadPrice = Number(breadItem?.["price"]);
+				const ingredientsPrice = ingredientItem;
+>>>>>>> 125ec29ca0c41c467b3feffcc1d3486233ed1db6
 
         li.innerHTML = `
           <div id="item">${`Hamburger ${count}`}</div>
@@ -158,9 +176,14 @@ if (mainPage) {
       breads.push(doc.data() as Breads);
     });
 
+<<<<<<< HEAD
     renderBreads();
     renderCart();
   });
+=======
+		renderBreads();
+	});
+>>>>>>> 125ec29ca0c41c467b3feffcc1d3486233ed1db6
 
   onSnapshot(collection(db, "Ingredientes"), (collection) => {
     ingredients = [];
