@@ -93,6 +93,11 @@ if (mainPage) {
       `;
 
       const liInput = li.querySelector("input") as HTMLInputElement;
+      const button = mainPage.querySelector("#salvarHamburguer") as HTMLButtonElement;
+      liInput.addEventListener("click", () => {
+        button.disabled = false;
+      });
+
       liInput.addEventListener("change", breadSelectedChange);
       ulBreads.appendChild(li);
     });
@@ -100,7 +105,6 @@ if (mainPage) {
 
   const ingredientSelectedChange = (e: Event) => {
     const input = e.target as HTMLInputElement;
-
     if (input.checked) {
       ingredientSelected.push(Number(input.value));
     } else {
@@ -127,9 +131,11 @@ if (mainPage) {
           <div>${formatCurrency(item.price)}</div>
         </label>
       `;
-
+     
       const liInput = li.querySelector("input") as HTMLInputElement;
+      
       liInput.addEventListener("change", ingredientSelectedChange);
+
       ulIngredients.appendChild(li);
     });
   };
