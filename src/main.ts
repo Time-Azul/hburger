@@ -81,11 +81,15 @@ if (mainPage) {
 		const getItensStorage = localStorage.getItem("itensCart");
 		const itensCartStorage = JSON.parse(`${getItensStorage}`);
 
-		if (itensCartStorage.length === 1) {
-			countBurger.innerHTML = "1 Hambúrguer";
-		} else if (itensCartStorage.length >= 2) {
-			countBurger.innerHTML = "";
-			countBurger.innerHTML = `${itensCartStorage.length} Hambúrgueres`;
+		if (itensCartStorage) {
+			if (itensCartStorage.length < 1) {
+				countBurger.innerHTML = "0 Hambúrgueres";
+			} else if (itensCartStorage.length === 1) {
+				countBurger.innerHTML = "1 Hambúrguer";
+			} else {
+				countBurger.innerHTML = "";
+				countBurger.innerHTML = `${itensCartStorage.length} Hambúrgueres`;
+			}
 		}
 
 		if (itensCartStorage) {
