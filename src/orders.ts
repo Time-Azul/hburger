@@ -1,70 +1,72 @@
 import appendChild from "./functions/appendChild";
 import { Orders } from "./types/orders";
+import { onAuthStateChanged, getAuth, signOut } from "firebase/auth";
 
+const auth = getAuth();
+const buttonQuit = document.querySelector("#button-sair") as HTMLButtonElement;
 const ordersList = document.querySelector(".no-footer") as HTMLBodyElement;
+const userPhoto = document.querySelector("img#avatar") as HTMLImageElement;
 
 if (ordersList) {
-	let orders: Orders[] = [
-		{
-			id: 123456789,
-			date: 20220101,
-			price: 10000,
-			itens: 1000,
-		},
-		{
-			id: 123456789,
-			date: 20220202,
-			price: 200,
-			itens: 20,
-		},
-		{
-			id: 123456789,
-			date: 20220303,
-			price: 300,
-			itens: 30,
-		},
-		{
-			id: 123456789,
-			date: 20220404,
-			price: 400,
-			itens: 40,
-		},
-		{
-			id: 123456789,
-			date: 20220404,
-			price: 400,
-			itens: 40,
-		},
-		{
-			id: 123456789,
-			date: 20220404,
-			price: 400,
-			itens: 40,
-		},
-		{
-			id: 123456789,
-			date: 20220404,
-			price: 400,
-			itens: 40,
-		},
-		{
-			id: 123456789,
-			date: 20220404,
-			price: 40000,
-			itens: 4000,
-		},
-	];
+  let orders: Orders[] = [
+    {
+      id: 123456789,
+      date: 20220101,
+      price: 10000,
+      itens: 1000,
+    },
+    {
+      id: 123456789,
+      date: 20220202,
+      price: 200,
+      itens: 20,
+    },
+    {
+      id: 123456789,
+      date: 20220303,
+      price: 300,
+      itens: 30,
+    },
+    {
+      id: 123456789,
+      date: 20220404,
+      price: 400,
+      itens: 40,
+    },
+    {
+      id: 123456789,
+      date: 20220404,
+      price: 400,
+      itens: 40,
+    },
+    {
+      id: 123456789,
+      date: 20220404,
+      price: 400,
+      itens: 40,
+    },
+    {
+      id: 123456789,
+      date: 20220404,
+      price: 400,
+      itens: 40,
+    },
+    {
+      id: 123456789,
+      date: 20220404,
+      price: 40000,
+      itens: 4000,
+    },
+  ];
 
-	const listOrders = ordersList.querySelector(
-		"#list-orders"
-	) as HTMLDivElement;
+  const listOrders = ordersList.querySelector("#list-orders") as HTMLDivElement;
 
-	listOrders.innerHTML = "";
+  listOrders.innerHTML = "";
 
-	orders.forEach((item) => {
-		const orderItem = appendChild(
-			"li",
-			`
+  orders.forEach((item) => {
+    const orderItem = appendChild(
+      "li",
+      `
         <div class="id">#${item.id}</div>
         <div class="content">
             <div class="title">Detalhes do Pedido</div>
@@ -114,7 +116,20 @@ if (ordersList) {
             </button>
         </div>
         `,
-			listOrders
-		);
-	});
+      listOrders
+    );
+  });
+  if (userPhoto) {
+    buttonQuit.addEventListener("click", () => {
+      signOut(auth);
+    });
+
+    onAuthStateChanged(getAuth(), () => {
+      if (auth.currentUser) {
+        userPhoto.src = auth.currentUser.photoURL ?? "https://i.pravatar.cc/50";
+      } else {
+        window.location.assign("login.html");
+      }
+    });
+  }
 }
