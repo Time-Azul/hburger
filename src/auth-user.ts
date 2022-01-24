@@ -2,10 +2,10 @@ import { onAuthStateChanged, getAuth, signOut } from "firebase/auth";
 
 const auth = getAuth();
 const userPhoto = document.querySelector("img#avatar") as HTMLImageElement;
-const buttonQuit = document.querySelector("#button-sair") as HTMLButtonElement;
+// const buttonQuit = document.querySelector("#button-sair") as HTMLButtonElement;
 
 if (userPhoto) {
-  buttonQuit.addEventListener("click", () => {
+  userPhoto.addEventListener("click", () => {
     signOut(auth);
   });
 
