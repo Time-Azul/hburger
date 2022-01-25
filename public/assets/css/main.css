@@ -991,16 +991,12 @@ label {
     margin-top: var(--space);
 }
 
-#app>section>footer button { 
+#app>section>footer button#salvarHamburguer { 
     background-color: rgb(121, 119, 119);
 }
-#app>section>footer button:hover { 
+#app>section>footer button#salvarHamburguer:hover { 
     background-color: rgb(83, 81, 81);
     --primary: #737374;
-}
-
-#app>section>footer button { 
-    background-color: grey;
 }
 
 @media (min-width: 768px) {
