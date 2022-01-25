@@ -48,9 +48,10 @@ if (userPhoto) {
       signOut(auth);
     });
 
-    onAuthStateChanged(getAuth(), () => {
-      if (auth.currentUser) {
-        userPhoto.src = auth.currentUser.photoURL ?? "./assets/images/user.png";
+    onAuthStateChanged(getAuth(), (user) => {
+      if (user) {
+        sessionStorage.setItem('uid', user.uid);
+        userPhoto.src = user.photoURL ?? "./assets/images/user.png";
       } else {
         window.location.assign("login.html");
       }
