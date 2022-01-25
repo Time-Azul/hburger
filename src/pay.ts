@@ -82,16 +82,17 @@ if (pagePay) {
   IMask(code, {
     mask: "000[0]",
   });
-  
-	buttonPay.addEventListener("click", (e) => {
+
+  buttonPay.addEventListener("click", (e) => {
     Swal.fire({
-    position: 'center',
-    icon: 'success',
-    title: 'Pagamento Concluído',
-    showConfirmButton: true,
-    timer: 3000
-}), setTimeout(function() {
-	window.location.href = "https://codepen.io";
-    }, 3500);
+      position: "center",
+      icon: "success",
+      title: "Pagamento Concluído",
+      showConfirmButton: true,
+      timer: 3000,
+    }),
+      setTimeout(function () {
+        window.location.href = "https://time-azul-hburger.web.app/";
+      }, 3500);
   });
 }
