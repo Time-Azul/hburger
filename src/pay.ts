@@ -15,6 +15,11 @@ if (pagePay) {
 	const bank = form.querySelector("#bank") as HTMLInputField;
 	const installments = form.querySelector("#installments") as HTMLInputField;
 
+	const order = localStorage.getItem("order");
+	if (order) {
+		const parseOrde = JSON.parse(order);
+	}
+
 	number.addEventListener("keyup", (e) => {
 		number.value.replaceAll(" ", "");
 	});
