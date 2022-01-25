@@ -17,9 +17,13 @@ if (mainPage) {
 	let cart = {} as AnyObject;
 	let totalOrder: number;
 
-	const addCart = mainPage.querySelector(
-		"section footer button"
-	) as HTMLButtonElement;
+	const addCart = mainPage.querySelector("section footer button") as HTMLButtonElement;
+	const buttonPagar = mainPage.querySelector("#pagar") as HTMLButtonElement;
+
+	buttonPagar.addEventListener("click", (e) => {
+		e.preventDefault();
+		location.pathname = "pay.html";
+	})
 
 	const ulBreads = mainPage.querySelector(".bread ul") as HTMLDivElement;
 	ulBreads.innerHTML = "";
