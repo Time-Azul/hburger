@@ -2,7 +2,6 @@ import { HTMLInputField } from "./types/HTMLInputField";
 import IMask from "imask";
 import { getFirestore, collection, getDocs, addDoc } from "firebase/firestore";
 import formatCurrency from "./functions/formatCurrency";
-import Swal from "sweetalert2";
 
 const pagePay = document.querySelector("section.page") as HTMLElement;
 
@@ -81,18 +80,5 @@ if (pagePay) {
 
   IMask(code, {
     mask: "000[0]",
-  });
-
-  buttonPay.addEventListener("click", (e) => {
-    Swal.fire({
-      position: "center",
-      icon: "success",
-      title: "Pagamento Concluído",
-      showConfirmButton: true,
-      timer: 3000,
-    }),
-      setTimeout(function () {
-        window.location.href = "https://time-azul-hburger.web.app/";
-      }, 3500);
   });
 }
