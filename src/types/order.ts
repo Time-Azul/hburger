@@ -1,4 +1,7 @@
 export type Order = {
-	number: number;
 	user: string;
+	order: number;
+	itens: object[];
+	date: Date;
+	total: number;
 };
