@@ -250,11 +250,12 @@ if (mainPage) {
 	});
 
   let uid = sessionStorage.getItem('uid');
+  let numPed = new Date().getTime();
 
 	window.addEventListener("load", () => {
 		cart = {
 			user: uid,
-			order: 987654321,
+			order: numPed,
 		};
 
 		localStorage.setItem("order", JSON.stringify(cart));
