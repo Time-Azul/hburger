@@ -1,5 +1,7 @@
 body {
-    background-color: #fff;
+  background-color: #08182b;
+  background-image: url("../images/bg.svg");
+    
 }
 .message-404 {
     display: flex;
@@ -10,11 +12,12 @@ body {
   .text-404 span {
     font-size: 220px;
     color: #1F3BE5;
+    
   }
   
   .message-404 p {
     margin: -40px;
-    color: #111;
+    color: #fff;
 }
   
   .btn-404 {

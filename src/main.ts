@@ -153,6 +153,10 @@ if (mainPage) {
 			const liInput = li.querySelector("input") as HTMLInputElement;
 			liInput.addEventListener("change", breadSelectedChange);
 			ulBreads.appendChild(li);
+			addCart.addEventListener('click', (e) => {
+				e.preventDefault();
+				liInput.checked = false;
+			})
 		});
 	};
 
@@ -188,6 +192,10 @@ if (mainPage) {
 			const liInput = li.querySelector("input") as HTMLInputElement;
 			liInput.addEventListener("change", ingredientSelectedChange);
 			ulIngredients.appendChild(li);
+			addCart.addEventListener('click', (e) => {
+				e.preventDefault();
+				liInput.checked = false;
+			})
 		});
 	};
 
@@ -212,6 +220,8 @@ if (mainPage) {
 			includeItem();
 		}
 	};
+
+	
 
 	onSnapshot(collection(db, "breads"), (collection) => {
 		breads = [];

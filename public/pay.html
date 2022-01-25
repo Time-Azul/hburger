@@ -7,6 +7,7 @@
     <meta name="description" content="Projeto Hburger do Hcode Lab" />
     <title>HBurguer</title>
     <link rel="stylesheet" href="assets/css/main.css" />
+    <link rel="stylesheet" href="assets/css/modal.css" />
     <link rel="shortcut icon" href="assets/images/logo-favicon-blue.svg" type="image/x-icon" />
 </head>
 
@@ -17,8 +18,7 @@
                 <img src="assets/images/logo-icon-blue.svg" alt="Logo Icone" id="logo-icon" />
                 <img src="assets/images/logo-text-blue.svg" alt="Logo Texto" id="logo-text" />
             </a>
-            <img src="https://i.pravatar.cc/50" alt="Avatar" id="avatar" />
-            <button type="submit" aria-label="Sair" id="button-sair">Sair</button>
+            <img src="./assets/images/user.png" alt="Avatar" id="avatar" />
         </header>
 
         <main>
@@ -26,6 +26,7 @@
                 <h1>Pagamento</h1>
             </header>
             <section>
+                <div></div>
                 <form>
                     <input type="text" name="number" id="number" placeholder="Número do Cartão" />
 
@@ -39,7 +40,7 @@
                     </div>
 
                     <input type="text" name="name" id="name" placeholder="Nome" />
-
+                    <div class="modalBody"></div>
                     <select name="bank" id="bank">
               <option>Nubank</option>
               <option>C6 Bank</option>
