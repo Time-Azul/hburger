@@ -992,6 +992,14 @@ label {
 }
 
 #app>section>footer button { 
+    background-color: rgb(121, 119, 119);
+}
+#app>section>footer button:hover { 
+    background-color: rgb(83, 81, 81);
+    --primary: #737374;
+}
+
+#app>section>footer button { 
     background-color: grey;
 }
 
