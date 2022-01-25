@@ -59,9 +59,9 @@ const userPhoto = document.querySelector("img#avatar") as HTMLImageElement;
 //     },
 //   ];
 
-  const listOrders = ordersList.querySelector("#list-orders") as HTMLDivElement;
+const listOrders = ordersList.querySelector("#list-orders") as HTMLDivElement;
 
-  listOrders.innerHTML = "";
+listOrders.innerHTML = "";
 
 //   order.forEach((item) => {
 //     const orderItem = appendChild(

@@ -17,13 +17,15 @@ if (mainPage) {
 	let cart = {} as AnyObject;
 	let totalOrder: number;
 
-	const addCart = mainPage.querySelector("section footer button") as HTMLButtonElement;
+	const addCart = mainPage.querySelector(
+		"section footer button"
+	) as HTMLButtonElement;
 	const buttonPagar = mainPage.querySelector("#pagar") as HTMLButtonElement;
 
 	buttonPagar.addEventListener("click", (e) => {
 		e.preventDefault();
 		location.pathname = "pay.html";
-	})
+	});
 
 	const ulBreads = mainPage.querySelector(".bread ul") as HTMLDivElement;
 	ulBreads.innerHTML = "";
@@ -173,8 +175,10 @@ if (mainPage) {
 		setBurger();
 		renderCart();
 	});
-	const button = mainPage.querySelector("#salvarHamburguer") as HTMLButtonElement;
-	
+	const button = mainPage.querySelector(
+		"#salvarHamburguer"
+	) as HTMLButtonElement;
+
 	const renderBreads = () => {
 		ulBreads.innerHTML = "";
 		breads.forEach((item) => {
@@ -190,19 +194,18 @@ if (mainPage) {
 
 			const liInput = li.querySelector("input") as HTMLInputElement;
 			liInput.addEventListener("change", breadSelectedChange);
-			
+
 			ulBreads.appendChild(li);
 			liInput.addEventListener("click", () => {
 				button.disabled = false;
-				button.style.backgroundColor = '#4159e9';
+				button.style.backgroundColor = "#4159e9";
 			});
-			button.addEventListener('click', (e) => {
+			button.addEventListener("click", (e) => {
 				e.preventDefault();
 				liInput.checked = false;
 				button.disabled = true;
-				button.style.backgroundColor = 'grey';
-			})
-
+				button.style.backgroundColor = "grey";
+			});
 		});
 	};
 
@@ -238,10 +241,10 @@ if (mainPage) {
 			const liInput = li.querySelector("input") as HTMLInputElement;
 			liInput.addEventListener("change", ingredientSelectedChange);
 			ulIngredients.appendChild(li);
-			button.addEventListener('click', (e) => {
+			button.addEventListener("click", (e) => {
 				e.preventDefault();
 				liInput.checked = false;
-			})
+			});
 		});
 	};
 
