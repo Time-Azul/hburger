@@ -169,7 +169,8 @@ if (mainPage) {
 		setBurger();
 		renderCart();
 	});
-
+	const button = mainPage.querySelector("#salvarHamburguer") as HTMLButtonElement;
+	
 	const renderBreads = () => {
 		ulBreads.innerHTML = "";
 		breads.forEach((item) => {
@@ -185,7 +186,19 @@ if (mainPage) {
 
 			const liInput = li.querySelector("input") as HTMLInputElement;
 			liInput.addEventListener("change", breadSelectedChange);
+			
 			ulBreads.appendChild(li);
+			liInput.addEventListener("click", () => {
+				button.disabled = false;
+				button.style.backgroundColor = '#4159e9';
+			});
+			button.addEventListener('click', (e) => {
+				e.preventDefault();
+				liInput.checked = false;
+				button.disabled = true;
+				button.style.backgroundColor = 'grey';
+			})
+
 		});
 	};
 
@@ -221,6 +234,10 @@ if (mainPage) {
 			const liInput = li.querySelector("input") as HTMLInputElement;
 			liInput.addEventListener("change", ingredientSelectedChange);
 			ulIngredients.appendChild(li);
+			button.addEventListener('click', (e) => {
+				e.preventDefault();
+				liInput.checked = false;
+			})
 		});
 	};
 

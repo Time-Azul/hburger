@@ -991,6 +991,10 @@ label {
     margin-top: var(--space);
 }
 
+#app>section>footer button { 
+    background-color: grey;
+}
+
 @media (min-width: 768px) {
     #list-orders {
         display: grid;
