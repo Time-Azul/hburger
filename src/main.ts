@@ -2,6 +2,9 @@ import { Ingredient } from "./types/ingredient";
 import { Breads } from "./types/breads";
 import formatCurrency from "./functions/formatCurrency";
 import { getFirestore, onSnapshot, collection } from "firebase/firestore";
+import { format } from "date-fns";
+import locale from "date-fns/locale/pt-BR";
+import { AnyObject } from "./types/anyObject";
 
 const mainPage = document.querySelector(".mainBurger");
 
@@ -11,8 +14,8 @@ if (mainPage) {
 	let ingredients: Ingredient[] = [];
 	let breadSelected: number;
 	let ingredientSelected: number[] = [];
-	let cart = {};
 	let itensCart: object[] = [];
+	let cart = {} as AnyObject;
 
 	const addCart = mainPage.querySelector(
 		"section footer button"
@@ -30,32 +33,45 @@ if (mainPage) {
 		}
 	};
 
+	const payButton = mainPage.querySelector(
+		"aside footer button"
+	) as HTMLButtonElement;
+
+	const setOrder = () => {
+		alert("pagamento");
+	};
+
+	payButton.addEventListener("click", () => {
+		const getCart = localStorage.getItem("cart");
+		const getItens = localStorage.getItem("itensCart");
+	});
+
 	const calcTotal = () => {
 		const subtotal = mainPage.querySelector(".price span") as HTMLSpanElement;
 		const itensCard = localStorage.getItem("itensCart");
-		const itensCartParse = JSON.parse(`${itensCard}`);
-		const mergePrices: any = [];
-
-		if (itensCartParse) {
-			itensCartParse.forEach((item: any) => {
-				const breadsPrice = breads.find(
+		const mergePrices: number[] = [];
+		if (itensCard) {
+			const itensCartParse = JSON.parse(itensCard);
+			itensCartParse.forEach((item: AnyObject) => {
+				let breadsPrice = breads.find(
 					(bread) => bread.id === item.bread
 				)?.price;
 
-				const ingredientItem = item.ingredients
-					.map((ingredient: any) =>
+				let ingredientItem = item.ingredients
+					.map((ingredient: number) =>
 						ingredients.find(
 							(ingredientItem) => ingredientItem.id === ingredient
 						)
 					)
-					.map((ingredient: any) => ingredient.price)
-					.reduce((a: any, b: any) => a + b, 0);
+					.map((ingredient: { price: Ingredient }) => ingredient?.price)
+					.reduce((a: number, b: number) => a + b, 0);
 
-				mergePrices.push(breadsPrice, ingredientItem);
+				if (breadsPrice) {
+					mergePrices.push(breadsPrice, ingredientItem);
+				}
 			});
 		}
-
-		const total = mergePrices.reduce((a: any, b: any) => a + b, 0);
+		const total = mergePrices.reduce((a: number, b: number) => a + b, 0);
 		subtotal.innerHTML = formatCurrency(total);
 	};
 
@@ -93,21 +109,21 @@ if (mainPage) {
 		}
 
 		if (itensCartStorage) {
-			itensCartStorage.forEach((item: any, index: any) => {
+			itensCartStorage.forEach((item: AnyObject, index: number) => {
 				const li = document.createElement("li");
 
 				const breadItem = breads.find(
-					(price) => price.id === item["bread"]
+					(bread) => bread.id === item["bread"]
 				);
 
 				const ingredientItem = item.ingredients
-					.map((ingredient: any) =>
+					.map((ingredient: number) =>
 						ingredients.find(
 							(ingredientItem) => ingredientItem.id === ingredient
 						)
 					)
-					.map((ingredient: any) => ingredient.price)
-					.reduce((a: any, b: any) => a + b, 0);
+					.map((ingredient: { price: Ingredient }) => ingredient.price)
+					.reduce((a: number, b: number) => a + b, 0);
 
 				const breadPrice = Number(breadItem?.["price"]);
 				const ingredientsPrice = ingredientItem;
@@ -239,11 +255,13 @@ if (mainPage) {
 	});
 
 	window.addEventListener("load", () => {
+		const dateOrder = new Date();
+
 		cart = {
 			user: 123456789,
-			order: 987654321,
+			cart: format(dateOrder, "t", { locale }),
 		};
 
-		localStorage.setItem("order", JSON.stringify(cart));
+		localStorage.setItem("cart", JSON.stringify(cart));
 	});
 }
