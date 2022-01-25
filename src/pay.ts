@@ -1,7 +1,7 @@
 import queryStringToJSON from "./functions/queryStringToJSON";
 import { HTMLInputField } from "./types/HTMLInputField";
 import IMask from "imask";
-import { getDatabase, ref, set } from "firebase/database";
+import { getFirestore, collection, getDocs, addDoc } from "firebase/firestore";
 
 
 const pagePay = document.querySelector("section.page") as HTMLElement;
@@ -18,31 +18,29 @@ if (pagePay) {
 
 	const orderlocalStorage = localStorage.getItem("order");
 
-	buttonPay.addEventListener("click", (e) => {
+	if (orderlocalStorage) {
+		
+		const parseOrder = JSON.parse(orderlocalStorage);
 
+		const user = parseOrder.user;
+		const order = parseOrder.order;
+		const date = parseOrder.date;
+		const itens = parseOrder.itens;
+		const total = parseOrder.total;
 
-		if (orderlocalStorage) {
-			const parseOrder = JSON.parse(orderlocalStorage);
-			console.log(parseOrder);
+		const db = getFirestore();
+		const colletionsOrders = collection(db, 'orders');
 
-			const user = parseOrder.user;
-			const order = parseOrder.order;
-			const date = parseOrder.date;
-			const itens = parseOrder.itens;
-			const total = parseOrder.total;
-
-			(user: String, order: Number, date: Date, itens: Object, total: Number) => {
-				const db = getDatabase();
-				set(ref(db, 'orders/' + user), {
-					user,
-					order,
-					date,
-					itens,
-					total,
-				});
-			}
-		}
-	})
+		buttonPay.addEventListener("click", (e) => {
+			addDoc(colletionsOrders, {
+				user,
+				order,
+				date,
+				itens,
+				total
+			})
+		})
+	}
 
 	number.addEventListener("keyup", (e) => {
 		number.value.replaceAll(" ", "");

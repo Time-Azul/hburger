@@ -4,5 +4,5 @@ import "./auth-login";
 import "./register";
 import "./forget";
 import "./auth-user";
-//import "./orders";
+import "./orders";
 import "./pay";
