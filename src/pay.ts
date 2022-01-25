@@ -1,9 +1,9 @@
 import queryStringToJSON from "./functions/queryStringToJSON";
 import { HTMLInputField } from "./types/HTMLInputField";
 import IMask from "imask";
-import { onAuthStateChanged, getAuth, signOut } from "firebase/auth";
+import { getDatabase, ref, set } from "firebase/database";
 
-const auth = getAuth();
+
 const pagePay = document.querySelector("section.page") as HTMLElement;
 
 if (pagePay) {
@@ -14,11 +14,35 @@ if (pagePay) {
 	const name = form.querySelector("#name") as HTMLInputField;
 	const bank = form.querySelector("#bank") as HTMLInputField;
 	const installments = form.querySelector("#installments") as HTMLInputField;
+	const buttonPay = document.querySelector("#payment") as HTMLButtonElement;
 
-	const order = localStorage.getItem("order");
-	if (order) {
-		const parseOrde = JSON.parse(order);
-	}
+	const orderlocalStorage = localStorage.getItem("order");
+
+	buttonPay.addEventListener("click", (e) => {
+
+
+		if (orderlocalStorage) {
+			const parseOrder = JSON.parse(orderlocalStorage);
+			console.log(parseOrder);
+
+			const user = parseOrder.user;
+			const order = parseOrder.order;
+			const date = parseOrder.date;
+			const itens = parseOrder.itens;
+			const total = parseOrder.total;
+
+			(user: String, order: Number, date: Date, itens: Object, total: Number) => {
+				const db = getDatabase();
+				set(ref(db, 'orders/' + user), {
+					user,
+					order,
+					date,
+					itens,
+					total,
+				});
+			}
+		}
+	})
 
 	number.addEventListener("keyup", (e) => {
 		number.value.replaceAll(" ", "");
