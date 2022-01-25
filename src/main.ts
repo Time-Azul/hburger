@@ -6,10 +6,10 @@ import { format } from "date-fns";
 import locale from "date-fns/locale/pt-BR";
 import { AnyObject } from "./types/anyObject";
 
+const db = getFirestore();
 const mainPage = document.querySelector(".mainBurger");
 
 if (mainPage) {
-	const db = getFirestore();
 	let breads: Breads[] = [];
 	let ingredients: Ingredient[] = [];
 	let breadSelected: number;
@@ -83,20 +83,6 @@ if (mainPage) {
 			itensCartParse.splice(index, 1);
 		}
 
-		localStorage.setItem("itensCart", JSON.stringify(itensCartParse));
-		renderCart();
-	};
-
-	const renderCart = () => {
-		const ulCart = mainPage.querySelector("#cart ul") as HTMLUListElement;
-		let count = 0;
-		ulCart.innerHTML = "";
-
-		const countBurger = mainPage.querySelector(".countBurger") as HTMLElement;
-
-		const getItensStorage = localStorage.getItem("itensCart");
-		const itensCartStorage = JSON.parse(`${getItensStorage}`);
-
 		if (itensCartStorage) {
 			if (itensCartStorage.length < 1) {
 				countBurger.innerHTML = "0 Hambúrgueres";
@@ -135,8 +121,8 @@ if (mainPage) {
 						<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
 						<path d="M6 19C6 20.1 6.9 21 8 21H16C17.1 21 18 20.1 18 19V7H6V19ZM19 4H15.5L14.5 3H9.5L8.5 4H5V6H19V4Z" fill="black"/>
 						</svg>
-					</button>
-				`;
+            </button>
+            `;
 
 				const svg = li.querySelector("svg") as SVGSVGElement;
 				svg.addEventListener("click", () => {
@@ -162,17 +148,21 @@ if (mainPage) {
 		breads.forEach((item) => {
 			const li = document.createElement("li") as HTMLLIElement;
 			li.innerHTML = `
-				<label>
-					<input type="radio" name="item" value="${item.id}"/>
-					<span></span>
-					<h3>${item.name}</h3>
-					<div>${formatCurrency(item.price)}</div>
-				</label>
+      <label>
+      <input type="radio" name="item" value="${item.id}"/>
+      <span></span>
+      <h3>${item.name}</h3>
+      <div>${formatCurrency(item.price)}</div>
+      </label>
 			`;
 
 			const liInput = li.querySelector("input") as HTMLInputElement;
 			liInput.addEventListener("change", breadSelectedChange);
 			ulBreads.appendChild(li);
+			addCart.addEventListener("click", (e) => {
+				e.preventDefault();
+				liInput.checked = false;
+			});
 		});
 	};
 
@@ -203,11 +193,15 @@ if (mainPage) {
 				<h3>${item.name}</h3>
 				<div>${formatCurrency(item.price)}</div>
 				</label>
-			`;
+        `;
 
 			const liInput = li.querySelector("input") as HTMLInputElement;
 			liInput.addEventListener("change", ingredientSelectedChange);
 			ulIngredients.appendChild(li);
+			addCart.addEventListener("click", (e) => {
+				e.preventDefault();
+				liInput.checked = false;
+			});
 		});
 	};
 
@@ -254,12 +248,15 @@ if (mainPage) {
 		renderCart();
 	});
 
+	let uid = sessionStorage.getItem("uid");
+	let numPed = new Date().getTime();
+
 	window.addEventListener("load", () => {
 		const dateOrder = new Date();
 
 		cart = {
-			user: 123456789,
-			cart: format(dateOrder, "t", { locale }),
+			user: uid,
+			order: numPed,
 		};
 
 		localStorage.setItem("cart", JSON.stringify(cart));

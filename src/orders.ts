@@ -119,17 +119,4 @@ if (ordersList) {
       listOrders
     );
   });
-  if (userPhoto) {
-    buttonQuit.addEventListener("click", () => {
-      signOut(auth);
-    });
-
-    onAuthStateChanged(getAuth(), () => {
-      if (auth.currentUser) {
-        userPhoto.src = auth.currentUser.photoURL ?? "https://i.pravatar.cc/50";
-      } else {
-        window.location.assign("login.html");
-      }
-    });
-  }
 }
