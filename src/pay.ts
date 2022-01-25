@@ -1,7 +1,7 @@
-import queryStringToJSON from "./functions/queryStringToJSON";
 import { HTMLInputField } from "./types/HTMLInputField";
 import IMask from "imask";
 import { getFirestore, collection, getDocs, addDoc } from "firebase/firestore";
+import formatCurrency from "./functions/formatCurrency";
 
 
 const pagePay = document.querySelector("section.page") as HTMLElement;
@@ -13,8 +13,8 @@ if (pagePay) {
 	const code = form.querySelector("#code") as HTMLInputField;
 	const name = form.querySelector("#name") as HTMLInputField;
 	const bank = form.querySelector("#bank") as HTMLInputField;
-	const installments = form.querySelector("#installments") as HTMLInputField;
 	const buttonPay = document.querySelector("#payment") as HTMLButtonElement;
+	const installments = form.querySelector("#installments") as HTMLDivElement;
 
 	const orderlocalStorage = localStorage.getItem("order");
 
@@ -28,10 +28,20 @@ if (pagePay) {
 		const itens = parseOrder.itens;
 		const total = parseOrder.total;
 
-		const db = getFirestore();
-		const colletionsOrders = collection(db, 'orders');
+		const calcTotal = total / 2;
+		installments.innerHTML = "";
+
+		installments.innerHTML = `
+									<option value="1">1 parcela de ${formatCurrency(total)} (${formatCurrency(total)})</option>
+									<option value="2">2 parcelas de ${formatCurrency(calcTotal)} (${formatCurrency(total)})</option>
+								`;
+				
 
 		buttonPay.addEventListener("click", (e) => {
+		const db = getFirestore();
+		const colletionsOrders = collection(db, 'orders', user);
+
+		
 			addDoc(colletionsOrders, {
 				user,
 				order,

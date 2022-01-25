@@ -19,6 +19,7 @@ if (ordersList) {
         const renderOrders = () => {
 
             orders.forEach((item) => {
+                
                 const orderItem = appendChild(
                     "li",
                     `
@@ -28,7 +29,7 @@ if (ordersList) {
                 <ul>
                     <li>
                         <span>Data:</span>
-                        <span>${item}</span>
+                        <span>${new Date(item.date).toLocaleDateString('pt-PR')}</span>
                     </li>
                     <li>
                         <span>Valor:</span>
@@ -78,7 +79,6 @@ if (ordersList) {
 
         onSnapshot(collection(db, "orders"), (collection) => {
             orders = [];
-            console.log(orders);
             collection.forEach((doc) => {
                 orders.push(doc.data() as Order);
             });
