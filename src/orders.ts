@@ -79,9 +79,10 @@ if (ordersList) {
 
         onSnapshot(collection(db, "orders"), (collection) => {
             orders = [];
+            let uid = sessionStorage.getItem("uid");
             collection.forEach((doc) => {
                 const order = doc.data() as Order;
-                if (order.user) {
+                if (order.user == uid) {
                     orders.push(doc.data() as Order);
                 }
 
