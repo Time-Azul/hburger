@@ -19,7 +19,7 @@ if (ordersList) {
         const renderOrders = () => {
 
             orders.forEach((item) => {
-                
+
                 const orderItem = appendChild(
                     "li",
                     `
@@ -80,7 +80,11 @@ if (ordersList) {
         onSnapshot(collection(db, "orders"), (collection) => {
             orders = [];
             collection.forEach((doc) => {
-                orders.push(doc.data() as Order);
+                const order = doc.data() as Order;
+                if (order.user) {
+                    orders.push(doc.data() as Order);
+                }
+
             });
             renderOrders();
         });
