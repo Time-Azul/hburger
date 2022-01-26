@@ -15,9 +15,6 @@ if (pagePay) {
 	const bank = form.querySelector("#bank") as HTMLInputField;
 	const installments = form.querySelector("#installments") as HTMLDivElement;
 
-
-
-
 	const orderlocalStorage = localStorage.getItem("order");
 
 	if (orderlocalStorage) {
@@ -25,23 +22,21 @@ if (pagePay) {
 
 		buttonPay.addEventListener("click", () => {
 
-		const parseOrder = JSON.parse(orderlocalStorage);
+			const parseOrder = JSON.parse(orderlocalStorage);
 
-		const user = parseOrder.user;
-		const order = parseOrder.order;
-		const date = parseOrder.date;
-		const itens = parseOrder.itens;
-		const total = parseOrder.total;
+			const user = parseOrder.user;
+			const order = parseOrder.order;
+			const date = parseOrder.date;
+			const itens = parseOrder.itens;
+			const total = parseOrder.total;
 
-		const calcTotal = total / 2;
-		installments.innerHTML = "";
+			const calcTotal = total / 2;
+			installments.innerHTML = "";
 
-		installments.innerHTML = `
+			installments.innerHTML = `
 									<option value="1">1 parcela de ${formatCurrency(total)} (${formatCurrency(total)})</option>
 									<option value="2">2 parcelas de ${formatCurrency(calcTotal)} (${formatCurrency(total)})</option>
 								`;
-
-		
 
 			const db = getFirestore();
 
@@ -53,8 +48,11 @@ if (pagePay) {
 				itens,
 				total
 			})
-			localStorage.clear();
-			window.location.pathname = "orders.html";
+			.then(()=> {
+				localStorage.removeItem("order");
+				localStorage.removeItem("itensCart");
+				window.location.pathname = "orders.html";
+			})
 			
 
 		})

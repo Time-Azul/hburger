@@ -10,7 +10,7 @@ if (form) {
   span.style.marginTop = "10px";
 
   onAuthStateChanged(getAuth(), () => {
-    if (auth.currentUser) { 
+    if (auth.currentUser) {
 
       const url_atual = window.location.href;
 
@@ -19,7 +19,7 @@ if (form) {
         window.location.assign("index.html");
 
       }
-      
+
     }
   });
 
@@ -28,20 +28,20 @@ if (form) {
 
     const { email } = getFormValues(form);
 
-      sendPasswordResetEmail(auth, email)
+    sendPasswordResetEmail(auth, email)
 
-        .then(() => {
+      .then(() => {
 
-          const button = form.querySelector("button") as HTMLButtonElement;
-          const input = form.querySelector("input") as HTMLButtonElement;
-          button.disabled = true;
-          input.value = "";
-          
-          
-          span.innerText = "Instruções enviadas para seu e-mail!";
+        const button = form.querySelector("button") as HTMLButtonElement;
+        const input = form.querySelector("input") as HTMLButtonElement;
+        button.disabled = true;
+        input.value = "";
 
-        })
 
-        .catch((error) => console.error(error.code));
+        span.innerText = "Instruções enviadas para seu e-mail!";
+
+      })
+
+      .catch((error) => console.error(error.code));
   });
 }

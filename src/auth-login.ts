@@ -10,20 +10,19 @@ if (pageAuth) {
   const span = form.querySelector("span") as HTMLSpanElement;
   span.style.marginTop = "10px";
 
- 
-        onAuthStateChanged(getAuth(), () => {
-          if (auth.currentUser) { 
+  onAuthStateChanged(getAuth(), () => {
+    if (auth.currentUser) {
 
-            const url_atual = window.location.href;
+      const url_atual = window.location.href;
 
-            if (url_atual) {
+      if (url_atual) {
 
-              window.location.assign("index.html");
+        window.location.assign("index.html");
 
-            }
-            
-          } 
-        });
+      }
+
+    }
+  });
 
   form.addEventListener("submit", (e) => {
     e.preventDefault();

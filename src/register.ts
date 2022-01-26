@@ -11,14 +11,13 @@ const pageRegister = document.querySelector(
 
 const auth = getAuth();
 
-
 if (pageRegister) {
   const form = pageRegister.querySelector("form") as HTMLFormElement;
   const span = form.querySelector("span") as HTMLSpanElement;
   span.style.marginTop = "10px";
 
   onAuthStateChanged(getAuth(), () => {
-    if (auth.currentUser) { 
+    if (auth.currentUser) {
 
       const url_atual = window.location.href;
 
@@ -27,7 +26,7 @@ if (pageRegister) {
         window.location.assign("index.html");
 
       }
-      
+
     }
   });
 
@@ -45,12 +44,12 @@ if (pageRegister) {
         updateProfile(user, {
           displayName: name,
         }).then(() => {
-            setTimeout(() => {
-              window.location.href = "login.html";
-            }, 3000);
-          })
+          setTimeout(() => {
+            window.location.href = "login.html";
+          }, 3000);
+        })
           .catch((error) => {
-            
+
             const errorCode = error.code;
 
             console.log(errorCode);
