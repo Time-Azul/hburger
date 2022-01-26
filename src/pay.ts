@@ -13,15 +13,18 @@ if (pagePay) {
 	const code = form.querySelector("#code") as HTMLInputField;
 	const name = form.querySelector("#name") as HTMLInputField;
 	const bank = form.querySelector("#bank") as HTMLInputField;
-	const buttonPay = document.querySelector("#payment") as HTMLButtonElement;
 	const installments = form.querySelector("#installments") as HTMLDivElement;
 
-	
+
+
 
 	const orderlocalStorage = localStorage.getItem("order");
 
 	if (orderlocalStorage) {
-		
+		const buttonPay = document.querySelector("#payment") as HTMLButtonElement;
+
+		buttonPay.addEventListener("click", () => {
+
 		const parseOrder = JSON.parse(orderlocalStorage);
 
 		const user = parseOrder.user;
@@ -37,13 +40,12 @@ if (pagePay) {
 									<option value="1">1 parcela de ${formatCurrency(total)} (${formatCurrency(total)})</option>
 									<option value="2">2 parcelas de ${formatCurrency(calcTotal)} (${formatCurrency(total)})</option>
 								`;
-				
-
-		buttonPay.addEventListener("click", (e) => {
-		const db = getFirestore();
-		const colletionsOrders = collection(db, 'orders', user);
 
 		
+
+			const db = getFirestore();
+
+			const colletionsOrders = collection(db, 'orders');
 			addDoc(colletionsOrders, {
 				user,
 				order,
@@ -51,7 +53,12 @@ if (pagePay) {
 				itens,
 				total
 			})
+
+			localStorage.clear();
+			
+
 		})
+
 	}
 
 	number.addEventListener("keyup", (e) => {

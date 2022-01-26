@@ -174,6 +174,7 @@ if (mainPage) {
 	addCart.addEventListener("click", () => {
 		setBurger();
 		renderCart();
+		ingredientSelected = [];
 	});
 	const button = mainPage.querySelector(
 		"#salvarHamburguer"
