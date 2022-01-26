@@ -45,6 +45,9 @@ if (ordersList) {
                     </li>
                 </ul>
             </div>
+            <div class="actions">
+               
+            </div>
             `,
                     listOrders
                 );
