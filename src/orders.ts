@@ -29,7 +29,7 @@ if (ordersList) {
                 <ul>
                     <li>
                         <span>Data:</span>
-                        <span>${new Date(item.date).toLocaleDateString('pt-PR')}</span>
+                        <span>${new Date(item.date).toLocaleDateString('pt-BR')}</span>
                     </li>
                     <li>
                         <span>Valor:</span>
@@ -52,10 +52,9 @@ if (ordersList) {
                 );
             });
         }
-
         onSnapshot(collection(db, "orders"), (collection) => {
-            orders = [];
             let uid = sessionStorage.getItem("uid");
+            orders = [];
             collection.forEach((doc) => {
                 const order = doc.data() as Order;
                 if (order.user == uid) {

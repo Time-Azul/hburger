@@ -53,8 +53,8 @@ if (pagePay) {
 				itens,
 				total
 			})
-
 			localStorage.clear();
+			window.location.pathname = "orders.html";
 			
 
 		})
